@@ -92,7 +92,12 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    url: <%= ENV["SPARKWATCH_DATABASE_URL"] %>
+    host: pg-free-postgres-free-node.e.aivencloud.com  
+    port: 10252    
+    database: sparkwatch_production
+    username: avnadmin
+    password: <%= ENV["SPARKWATCH_DATABASE_PASSWORD"] %>    
+    sslmode: require
   cache:
     <<: *primary_production
     database: sparkwatch_production_cache
