@@ -1,0 +1,110 @@
+<% content_for :page_title do %>
+  <span id="cohort-title">Loading...</span>
+<% end %>
+
+<% content_for :page_subtitle do %>
+  <span id="cohort-subtitle"></span>
+<% end %>
+
+<div class="bg-gray-50 min-h-full" 
+     data-controller="cohort-details"
+     data-cohort-details-cohort-id-value="<%= params[:id] %>">
+
+  <!-- Hero Section (H1, H2, H8, H12) -->
+  <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 divide-x divide-gray-100">
+      <div class="px-4">
+        <p class="text-xs text-gray-500 uppercase">Instructor</p>
+        <p class="font-bold text-gray-900" id="hero-instructor">--</p>
+      </div>
+      <div class="px-4">
+        <p class="text-xs text-gray-500 uppercase">Program</p>
+        <p class="font-bold text-gray-900" id="hero-program">--</p>
+      </div>
+      <div class="px-4">
+        <p class="text-xs text-gray-500 uppercase">Top Student</p>
+        <p class="font-bold text-indigo-600" id="hero-top-student">--</p>
+      </div>
+      <div class="px-4">
+        <p class="text-xs text-gray-500 uppercase">Weekly Activity Vol</p>
+        <p class="font-bold text-green-600" id="hero-activity-vol">--</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI Row (K1, K2, K20, Risk) -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <% [
+      ["Student Count", "kpiStudentCount", "text-gray-900", nil],
+      ["Avg Engagement", "kpiAvgEngagement", "text-blue-600", "Last week"],
+      ["Top Performers", "kpiTopPerformers", "text-indigo-600", "Last week"],
+      ["Students At Risk", "kpiRiskCount", "text-red-600", "Last month"]
+    ].each do |label, target, color, period| %>
+      <div class="bg-white rounded-lg shadow p-4">
+        <p class="text-gray-500 text-xs font-medium"><%= label %></p>
+        <p class="text-2xl font-bold <%= color %> mt-1" data-cohort-details-target="<%= target %>">
+          <span class="inline-block w-12 h-8 bg-gray-200 animate-pulse rounded"></span>
+        </p>
+        <% if period %>
+          <p class="text-xs text-gray-400 mt-1"><%= period %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Charts Grid (2x2) - C1, C2, C3, C15 -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+    
+    <!-- C1: Engagement Trend -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Engagement Trend</h3>
+      <p class="text-xs text-gray-500 mb-4">Last 12 weeks</p>
+      <div class="h-[250px] relative">
+        <canvas data-cohort-details-target="trendChart"></canvas>
+      </div>
+    </div>
+
+    <!-- C2: Activity Volume -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Daily Activity Volume</h3>
+      <p class="text-xs text-gray-500 mb-4">Last 7 days</p>
+      <div class="h-[250px] relative">
+        <canvas data-cohort-details-target="activityChart"></canvas>
+      </div>
+    </div>
+
+    <!-- C3: Risk Severity Trend -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Risk Severity Trend</h3>
+      <p class="text-xs text-gray-500 mb-4">Last 3 months</p>
+      <div class="h-[250px] relative">
+        <canvas data-cohort-details-target="riskChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Score Distribution -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Engagement Score Distribution</h3>
+      <p class="text-xs text-gray-500 mb-4">Last week scores</p>
+      <div class="h-[250px] relative">
+        <canvas data-cohort-details-target="distributionChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Width Student Roster - T17, T1, T4, T6, T7, T15, T19 -->
+  <link href="https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
+
+  <div class="bg-white rounded-lg shadow mb-10 overflow-hidden">
+    <div class="p-6 border-b border-gray-200">
+      <h3 class="text-lg font-semibold text-gray-800">Student Roster</h3>
+    </div>
+    <div id="gridjs-roster" data-cohort-details-target="gridContainer" class="p-4">
+      <div class="animate-pulse space-y-4">
+        <div class="h-10 bg-gray-100 rounded"></div>
+        <div class="h-10 bg-gray-50 rounded"></div>
+        <div class="h-10 bg-gray-100 rounded"></div>
+      </div>
+    </div>
+  </div>
+</div>

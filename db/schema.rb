@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_19_070956) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_25_054133) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -19,6 +19,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_19_070956) do
     t.datetime "created_at", null: false
     t.bigint "student_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_activities_on_created_at"
+    t.index ["student_id", "created_at"], name: "index_activities_on_student_id_and_created_at"
     t.index ["student_id"], name: "index_activities_on_student_id"
   end
 
@@ -33,18 +35,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_19_070956) do
   create_table "engagement_scores", force: :cascade do |t|
     t.json "breakdown"
     t.datetime "created_at", null: false
-    t.decimal "score"
+    t.integer "score"
     t.bigint "student_id", null: false
     t.datetime "updated_at", null: false
+    t.date "week_start"
+    t.index ["student_id", "week_start"], name: "index_engagement_scores_on_student_id_and_week_start", unique: true
     t.index ["student_id"], name: "index_engagement_scores_on_student_id"
+    t.index ["week_start", "score"], name: "idx_eng_scores_on_date_and_val"
   end
 
   create_table "predictions", force: :cascade do |t|
+    t.jsonb "breakdown", default: {}
     t.integer "confidence"
     t.datetime "created_at", null: false
-    t.decimal "risk_score"
+    t.date "month_start"
+    t.integer "risk_score"
     t.bigint "student_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["month_start", "risk_score"], name: "index_predictions_on_month_start_and_risk_score"
+    t.index ["student_id", "month_start"], name: "index_predictions_on_student_id_and_month_start", unique: true
     t.index ["student_id"], name: "index_predictions_on_student_id"
   end
 
@@ -53,7 +62,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_19_070956) do
     t.datetime "created_at", null: false
     t.string "email"
     t.string "name"
-    t.integer "status"
     t.datetime "updated_at", null: false
     t.index ["cohort_id"], name: "index_students_on_cohort_id"
   end

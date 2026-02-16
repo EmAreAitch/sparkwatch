@@ -1,0 +1,109 @@
+<% content_for :page_title, "Cohort Overview" %>
+<% content_for :page_subtitle, "Analyze cohort performance, instructor impact, and program trends" %>
+
+<div class="bg-gray-50 min-h-full" data-controller="cohort-overview">
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <% [
+      ["Total Cohorts", "totalCohorts", "text-gray-900"],
+      ["Avg Cohort Size", "avgCohortSize", "text-indigo-600"],
+      ["Avg Engagement", "avgEngagement", "text-green-600"],
+      ["Unique Programs", "uniquePrograms", "text-blue-600"]
+    ].each do |label, target, color| %>
+      <div class="bg-white rounded-lg shadow p-4">
+        <p class="text-gray-500 text-xs font-medium"><%= label %></p>
+        <p class="text-2xl font-bold <%= color %> mt-1" data-cohort-overview-target="<%= target %>">
+          <span class="inline-block w-16 h-8 bg-gray-200 animate-pulse rounded"></span>
+        </p>
+        <p class="text-xs text-gray-400 mt-1">
+          <%= label == "Avg Engagement" ? "Last week" : "" %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Enrollment by Program</h3>
+      <p class="text-xs text-gray-500 mb-4">Total students across all cohorts</p>
+      <div class="h-[280px] relative">
+        <div data-cohort-overview-target="chartSkeleton" class="absolute inset-0 flex items-center justify-center">
+          <div class="w-48 h-48 bg-gray-200 animate-pulse rounded-full"></div>
+        </div>
+        <canvas data-cohort-overview-target="canvas" data-chart-type="doughnut" data-chart-widget="program_distribution" class="hidden"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Instructor Performance</h3>
+      <p class="text-xs text-gray-500 mb-4">Avg engagement last week</p>
+      <div class="h-[280px] relative">
+        <div data-cohort-overview-target="chartSkeleton" class="absolute inset-0 flex flex-col justify-around gap-2 pl-8">
+          <% [60, 75, 55, 85, 70, 65].each do |w| %>
+            <div class="bg-gray-200 animate-pulse rounded-r h-full" style="width: <%= w %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-cohort-overview-target="canvas" data-chart-type="bar" data-chart-orientation="horizontal" data-chart-widget="instructor_performance" class="hidden"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Cohort Size Impact</h3>
+      <p class="text-xs text-gray-500 mb-4">Last week engagement vs cohort size</p>
+      <div class="h-[280px] relative">
+        <div data-cohort-overview-target="chartSkeleton" class="absolute inset-0 flex items-center justify-center">
+          <div class="w-full h-full relative p-8">
+            <% [[25,60,4], [40,45,5], [55,70,3], [70,55,4], [35,75,3], [60,40,5]].each do |l, t, s| %>
+              <div class="absolute w-<%= s %> h-<%= s %> bg-indigo-300 animate-pulse rounded-full" style="left: <%= l %>%; top: <%= t %>%"></div>
+            <% end %>
+          </div>
+        </div>
+        <canvas data-cohort-overview-target="canvas" data-chart-type="scatter" data-chart-widget="size_engagement" class="hidden"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Projected Success Rates</h3>
+      <p class="text-xs text-gray-500 mb-4">Based on last month's risk scores</p>
+      <div class="h-[280px] relative">
+        <div data-cohort-overview-target="chartSkeleton" class="absolute inset-0 flex flex-col justify-around gap-2 pl-8">
+          <% [55, 70, 75].each do |w| %>
+            <div class="bg-gray-200 animate-pulse rounded-r h-full" style="width: <%= w %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-cohort-overview-target="canvas" data-chart-type="bar" data-chart-orientation="horizontal" data-chart-widget="completion_projections" class="hidden"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow">
+    <div class="border-b border-gray-200">
+      <nav class="flex -mb-px overflow-x-auto">
+        <% [
+          ["high-performing", "High Performing", "highPerformingCount"],
+          ["needs-attention", "Needs Attention", "needsAttentionCount"],
+          ["most-active", "Most Active", "mostActiveCount"]
+        ].each_with_index do |(tab, label, count), i| %>
+          <button class="px-4 sm:px-6 py-3 text-sm font-medium border-b-2 <%= i == 0 ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700' %>"
+                  data-cohort-overview-target="tabButton"
+                  data-action="click->cohort-overview#switchTab"
+                  data-tab="<%= tab %>">
+            <%= label %>
+          </button>
+        <% end %>
+      </nav>
+    </div>
+
+    <% [
+      ["high-performing", "Cohorts with avg engagement ≥ 85% last week"],
+      ["needs-attention", "Cohorts with engagement < 70% or high avg risk last month"],
+      ["most-active", "Cohorts with highest total activity counts"]
+    ].each_with_index do |(tab, desc), i| %>
+      <div data-cohort-overview-target="tabPanel" data-tab="<%= tab %>" class="<%= 'hidden' unless i == 0 %>">
+        <div class="p-4 sm:p-6">
+          <p class="text-sm text-gray-600 mb-4"><%= desc %></p>
+          <div data-cohort-overview-target="gridContainer" data-grid-type="<%= tab %>"></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

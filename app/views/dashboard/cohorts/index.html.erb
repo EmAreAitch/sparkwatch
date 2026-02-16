@@ -1,0 +1,158 @@
+<% content_for :page_title, "Active Cohorts" %>
+<% content_for :page_subtitle do %>
+  <span data-cohort-subtitle>Loading cohorts...</span>
+<% end %>
+
+<div class="bg-gray-50 min-h-full -m-8 p-4 sm:p-8" data-controller="cohort-list">
+  <!-- KPI Summary Row - Skeleton -->
+  <div data-cohort-list-target="summarySkeleton" class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <% 4.times do %>
+      <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+        <div class="h-4 bg-gray-200 animate-pulse rounded w-24 mb-2"></div>
+        <div class="h-8 bg-gray-200 animate-pulse rounded w-16 mb-1"></div>
+        <div class="h-3 bg-gray-200 animate-pulse rounded w-32"></div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- KPI Summary Row - Actual Content -->
+  <div data-cohort-list-target="summarySection" class="hidden grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+      <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Avg Engagement</div>
+      <div class="text-2xl font-bold text-gray-900" data-kpi="avg-engagement">0%</div>
+      <div class="text-xs text-gray-500 mt-1">Across all cohorts</div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+      <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total Students</div>
+      <div class="text-2xl font-bold text-gray-900" data-kpi="total-students">0</div>
+      <div class="text-xs text-gray-500 mt-1">Active learners</div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+      <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">At-Risk Students</div>
+      <div class="text-2xl font-bold text-red-600" data-kpi="total-at-risk">0</div>
+      <div class="text-xs text-gray-500 mt-1">Need attention</div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+      <div class="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Top Performer</div>
+      <div class="text-lg font-bold text-gray-900" data-kpi="top-performer">—</div>
+      <div class="text-xs text-gray-500 mt-1" data-kpi="top-performer-engagement">—</div>
+    </div>
+  </div>
+
+  <!-- Thriving Cohorts - Skeleton -->
+  <div data-cohort-list-target="thrivingSkeleton" class="mb-10">
+    <div class="bg-green-50/30 rounded-xl p-6">
+      <div class="flex items-center mb-6">
+        <div class="w-2 h-2 rounded-full bg-green-500 mr-3"></div>
+        <h3 class="text-lg font-semibold text-gray-900">Thriving Cohorts</h3>
+        <span class="ml-2 text-sm text-gray-500">(Engagement ≥ 85%)</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% 3.times do %>
+          <div class="bg-white rounded-lg border-l-4 border-green-500 shadow-sm p-6">
+            <div class="h-6 bg-gray-200 animate-pulse rounded w-32 mb-2"></div>
+            <div class="h-4 bg-gray-200 animate-pulse rounded w-24 mb-4"></div>
+            <div class="space-y-2 mb-4 pb-4 border-b border-gray-100">
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-20"></div>
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-16"></div>
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-28"></div>
+            </div>
+            <div class="h-4 bg-gray-200 animate-pulse rounded w-24"></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thriving Cohorts - Actual Content -->
+  <div data-cohort-list-target="thrivingSection" class="hidden mb-10">
+    <div class="bg-green-50/30 rounded-xl p-6">
+      <div class="flex items-center mb-6">
+        <div class="w-2 h-2 rounded-full bg-green-500 mr-3"></div>
+        <h3 class="text-lg font-semibold text-gray-900">Thriving Cohorts</h3>
+        <span class="ml-2 text-sm text-gray-500">(Engagement ≥ 85%)</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-cohorts-container>
+        <!-- Cohorts will be inserted here by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Steady Progress - Skeleton -->
+  <div data-cohort-list-target="steadySkeleton" class="mb-10">
+    <div class="bg-yellow-50/30 rounded-xl p-6">
+      <div class="flex items-center mb-6">
+        <div class="w-2 h-2 rounded-full bg-yellow-500 mr-3"></div>
+        <h3 class="text-lg font-semibold text-gray-900">Steady Progress</h3>
+        <span class="ml-2 text-sm text-gray-500">(Engagement 50-85%)</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% 2.times do %>
+          <div class="bg-white rounded-lg border-l-4 border-yellow-500 shadow-sm p-6">
+            <div class="h-6 bg-gray-200 animate-pulse rounded w-32 mb-2"></div>
+            <div class="h-4 bg-gray-200 animate-pulse rounded w-24 mb-4"></div>
+            <div class="space-y-2 mb-4 pb-4 border-b border-gray-100">
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-20"></div>
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-16"></div>
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-28"></div>
+            </div>
+            <div class="h-4 bg-gray-200 animate-pulse rounded w-24"></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Steady Progress - Actual Content -->
+  <div data-cohort-list-target="steadySection" class="hidden mb-10">
+    <div class="bg-yellow-50/30 rounded-xl p-6">
+      <div class="flex items-center mb-6">
+        <div class="w-2 h-2 rounded-full bg-yellow-500 mr-3"></div>
+        <h3 class="text-lg font-semibold text-gray-900">Steady Progress</h3>
+        <span class="ml-2 text-sm text-gray-500">(Engagement 50-85%)</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-cohorts-container>
+        <!-- Cohorts will be inserted here by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Needs Support - Skeleton -->
+  <div data-cohort-list-target="needsSupportSkeleton">
+    <div class="bg-red-50/30 rounded-xl p-6">
+      <div class="flex items-center mb-6">
+        <div class="w-2 h-2 rounded-full bg-red-500 mr-3"></div>
+        <h3 class="text-lg font-semibold text-gray-900">Needs Support</h3>
+        <span class="ml-2 text-sm text-gray-500">(Engagement < 50%)</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% 1.times do %>
+          <div class="bg-white rounded-lg border-l-4 border-red-500 shadow-sm p-6">
+            <div class="h-6 bg-gray-200 animate-pulse rounded w-32 mb-2"></div>
+            <div class="h-4 bg-gray-200 animate-pulse rounded w-24 mb-4"></div>
+            <div class="space-y-2 mb-4 pb-4 border-b border-gray-100">
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-20"></div>
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-16"></div>
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-28"></div>
+            </div>
+            <div class="h-4 bg-gray-200 animate-pulse rounded w-24"></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Needs Support - Actual Content -->
+  <div data-cohort-list-target="needsSupportSection" class="hidden">
+    <div class="bg-red-50/30 rounded-xl p-6">
+      <div class="flex items-center mb-6">
+        <div class="w-2 h-2 rounded-full bg-red-500 mr-3"></div>
+        <h3 class="text-lg font-semibold text-gray-900">Needs Support</h3>
+        <span class="ml-2 text-sm text-gray-500">(Engagement < 50%)</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-cohorts-container>
+        <!-- Cohorts will be inserted here by JS -->
+      </div>
+    </div>
+  </div>
+</div>

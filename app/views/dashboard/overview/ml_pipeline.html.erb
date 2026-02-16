@@ -1,0 +1,293 @@
+<% content_for(:page_title) { "How It Works" } %>
+<% content_for(:page_subtitle) { "ML pipeline, scoring engine, and prediction methodology" } %>
+
+<div class="max-w-4xl mx-auto space-y-8">
+
+  <!-- Intro -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-bold text-gray-900 mb-3">Overview</h3>
+    <p class="text-gray-700 text-sm leading-relaxed">
+      SparkWatch uses a <strong>Sim-to-Real</strong> architecture: a shared behavioral simulator generates both the
+      application data and the ML training data. This guarantees the model understands the exact patterns present in the
+      platform — a common pitfall in demo projects where seed scripts and training pipelines drift apart.
+    </p>
+  </div>
+
+  <!-- Data Flow -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Data Flow</h3>
+    <div class="bg-gray-50 rounded-lg p-5 font-mono text-xs text-gray-700 leading-relaxed overflow-x-auto">
+      <pre class="whitespace-pre">StudentSimulator (shared behavioral model)
+    │
+    ├── db/seeds.rb
+    │     └── 150 students × 6 cohorts × 15 weeks
+    │         └── Activities → EngagementScores → Predictions
+    │
+    └── lib/ml/train_model.rb
+          └── 50,000 labeled samples
+                ↓
+          RandomForest + StandardScaler
+                ↓
+          dropout_model.marshal (serialized via Git LFS)
+                ↓
+          Prediction.generate_for(students)
+                ↓
+          Dashboard Services (widget-based, memoized)
+                ↓
+          Stimulus Controllers + Chart.js</pre>
+    </div>
+  </div>
+
+  <!-- Student Simulator -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Student Simulator</h3>
+    <p class="text-gray-700 text-sm mb-4">
+      Every student is assigned a <strong>behavioral persona</strong> based on their position in the cohort.
+      Each persona defines a base engagement rate, variance, and natural decline over the semester.
+    </p>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-200">
+            <th class="text-left py-2 px-3 font-semibold text-gray-700">Persona</th>
+            <th class="text-center py-2 px-3 font-semibold text-gray-700">Distribution</th>
+            <th class="text-center py-2 px-3 font-semibold text-gray-700">Base Rate</th>
+            <th class="text-center py-2 px-3 font-semibold text-gray-700">Variance</th>
+            <th class="text-center py-2 px-3 font-semibold text-gray-700">Weekly Decline</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600">
+          <tr class="border-b border-gray-100">
+            <td class="py-2 px-3"><span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>Star Student</td>
+            <td class="text-center py-2 px-3">40%</td>
+            <td class="text-center py-2 px-3">115%</td>
+            <td class="text-center py-2 px-3">±10%</td>
+            <td class="text-center py-2 px-3">5%</td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <td class="py-2 px-3"><span class="inline-block w-2 h-2 rounded-full bg-blue-500 mr-2"></span>Engaged</td>
+            <td class="text-center py-2 px-3">35%</td>
+            <td class="text-center py-2 px-3">100%</td>
+            <td class="text-center py-2 px-3">±15%</td>
+            <td class="text-center py-2 px-3">8%</td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <td class="py-2 px-3"><span class="inline-block w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>Moderate</td>
+            <td class="text-center py-2 px-3">15%</td>
+            <td class="text-center py-2 px-3">80%</td>
+            <td class="text-center py-2 px-3">±20%</td>
+            <td class="text-center py-2 px-3">12%</td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <td class="py-2 px-3"><span class="inline-block w-2 h-2 rounded-full bg-orange-500 mr-2"></span>Inconsistent</td>
+            <td class="text-center py-2 px-3">7%</td>
+            <td class="text-center py-2 px-3">60%</td>
+            <td class="text-center py-2 px-3">±25%</td>
+            <td class="text-center py-2 px-3">20%</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3"><span class="inline-block w-2 h-2 rounded-full bg-red-500 mr-2"></span>Disengaged</td>
+            <td class="text-center py-2 px-3">3%</td>
+            <td class="text-center py-2 px-3">20%</td>
+            <td class="text-center py-2 px-3">±15%</td>
+            <td class="text-center py-2 px-3">10%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-gray-500 text-xs mt-3">
+      The simulator also models mid-semester slumps, personal trend variations, and random boost/rough weeks for realism.
+    </p>
+  </div>
+
+  <!-- Engagement Scoring -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Engagement Scoring</h3>
+    <p class="text-gray-700 text-sm mb-4">
+      Each student receives a <strong>weekly engagement score</strong> on a 0–10,000 integer scale 
+      (displayed as 0–100%). The score is a weighted sum of activity completion percentages:
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-4">
+      <div class="bg-indigo-50 rounded-lg p-3 text-center">
+        <p class="text-2xl font-bold text-indigo-700">30%</p>
+        <p class="text-xs text-gray-600 mt-1">Attendance</p>
+        <p class="text-xs text-gray-400">3 classes/wk</p>
+      </div>
+      <div class="bg-indigo-50 rounded-lg p-3 text-center">
+        <p class="text-2xl font-bold text-indigo-700">30%</p>
+        <p class="text-xs text-gray-600 mt-1">Assignments</p>
+        <p class="text-xs text-gray-400">2 submissions/wk</p>
+      </div>
+      <div class="bg-indigo-50 rounded-lg p-3 text-center">
+        <p class="text-2xl font-bold text-indigo-700">20%</p>
+        <p class="text-xs text-gray-600 mt-1">Quizzes</p>
+        <p class="text-xs text-gray-400">1 quiz/wk</p>
+      </div>
+      <div class="bg-indigo-50 rounded-lg p-3 text-center">
+        <p class="text-2xl font-bold text-indigo-700">10%</p>
+        <p class="text-xs text-gray-600 mt-1">Questions</p>
+        <p class="text-xs text-gray-400">2 questions/wk</p>
+      </div>
+      <div class="bg-indigo-50 rounded-lg p-3 text-center">
+        <p class="text-2xl font-bold text-indigo-700">10%</p>
+        <p class="text-xs text-gray-600 mt-1">Parent Login</p>
+        <p class="text-xs text-gray-400">2 logins/wk</p>
+      </div>
+    </div>
+    <p class="text-gray-500 text-xs">
+      Scores are stored as integers (0–10,000) to avoid floating-point drift in aggregations. 
+      The <code class="bg-gray-100 px-1 rounded">EngagementScore.to_percent</code> method converts to display values.
+    </p>
+  </div>
+
+  <!-- ML Model -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Dropout Prediction Model</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Model Specs -->
+      <div>
+        <h4 class="font-semibold text-gray-800 text-sm mb-3">Model Specification</h4>
+        <dl class="space-y-2 text-sm">
+          <div class="flex justify-between border-b border-gray-100 pb-2">
+            <dt class="text-gray-500">Algorithm</dt>
+            <dd class="font-medium text-gray-900">Random Forest</dd>
+          </div>
+          <div class="flex justify-between border-b border-gray-100 pb-2">
+            <dt class="text-gray-500">Estimators</dt>
+            <dd class="font-medium text-gray-900">150 trees</dd>
+          </div>
+          <div class="flex justify-between border-b border-gray-100 pb-2">
+            <dt class="text-gray-500">Max Depth</dt>
+            <dd class="font-medium text-gray-900">10</dd>
+          </div>
+          <div class="flex justify-between border-b border-gray-100 pb-2">
+            <dt class="text-gray-500">Max Features</dt>
+            <dd class="font-medium text-gray-900">2 per split</dd>
+          </div>
+          <div class="flex justify-between border-b border-gray-100 pb-2">
+            <dt class="text-gray-500">Preprocessing</dt>
+            <dd class="font-medium text-gray-900">StandardScaler</dd>
+          </div>
+          <div class="flex justify-between border-b border-gray-100 pb-2">
+            <dt class="text-gray-500">Training Samples</dt>
+            <dd class="font-medium text-gray-900">50,000</dd>
+          </div>
+          <div class="flex justify-between border-b border-gray-100 pb-2">
+            <dt class="text-gray-500">Train/Test Split</dt>
+            <dd class="font-medium text-gray-900">80/20</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt class="text-gray-500">Label Noise</dt>
+            <dd class="font-medium text-gray-900">5% (robustness)</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Input Features -->
+      <div>
+        <h4 class="font-semibold text-gray-800 text-sm mb-3">Input Features</h4>
+        <div class="space-y-3">
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="font-medium text-gray-800 text-sm">Class Attendance %</p>
+            <p class="text-xs text-gray-500 mt-1">Actual classes attended vs. 3 expected per week, capped at 100%</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="font-medium text-gray-800 text-sm">Assignment Submission %</p>
+            <p class="text-xs text-gray-500 mt-1">Assignments submitted vs. 2 expected per week, capped at 100%</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="font-medium text-gray-800 text-sm">Parent Login %</p>
+            <p class="text-xs text-gray-500 mt-1">Parent logins vs. 2 expected per week, capped at 100%</p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-3">
+            <p class="font-medium text-gray-800 text-sm">Score Trend (Δ)</p>
+            <p class="text-xs text-gray-500 mt-1">Raw delta between first and last engagement score of the month</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Risk Classification -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Risk Classification</h3>
+    <p class="text-gray-700 text-sm mb-4">
+      The model outputs a probability of dropout (0–1), which is scaled to a <strong>risk score</strong> (0–10,000).
+      Students are then classified into three risk tiers:
+    </p>
+    <div class="grid grid-cols-3 gap-3">
+      <div class="rounded-lg p-4 bg-red-50 border border-red-200 text-center">
+        <p class="text-lg font-bold text-red-700">High Risk</p>
+        <p class="text-sm text-red-600 mt-1">≥ 90%</p>
+        <p class="text-xs text-gray-500 mt-2">Immediate intervention recommended</p>
+      </div>
+      <div class="rounded-lg p-4 bg-amber-50 border border-amber-200 text-center">
+        <p class="text-lg font-bold text-amber-700">Medium Risk</p>
+        <p class="text-sm text-amber-600 mt-1">75% – 89%</p>
+        <p class="text-xs text-gray-500 mt-2">Monitor closely, proactive outreach</p>
+      </div>
+      <div class="rounded-lg p-4 bg-green-50 border border-green-200 text-center">
+        <p class="text-lg font-bold text-green-700">Low Risk</p>
+        <p class="text-sm text-green-600 mt-1">< 75%</p>
+        <p class="text-xs text-gray-500 mt-2">On track, standard monitoring</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Explainability -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Prediction Explainability</h3>
+    <p class="text-gray-700 text-sm mb-3">
+      Every prediction includes a <strong>per-feature breakdown</strong> stored as JSONB. This shows the raw input
+      values that drove each prediction, making it possible to explain <em>why</em> a student was flagged:
+    </p>
+    <div class="bg-gray-50 rounded-lg p-4 font-mono text-xs text-gray-700">
+      <pre class="whitespace-pre">{
+  "class_attended":        83,   ← 83% of expected classes
+  "assignment_submitted":  50,   ← 50% of expected assignments
+  "parent_login":          25,   ← 25% of expected parent logins
+  "score_trend":         -340    ← engagement score dropped by 340 points
+}</pre>
+    </div>
+    <p class="text-gray-500 text-xs mt-3">
+      This breakdown powers the "Why this prediction?" section on the Student Detail page,
+      showing exactly which activity dimensions contributed to a student's risk score.
+    </p>
+  </div>
+
+  <!-- Training Labels -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h3 class="text-lg font-bold text-gray-900 mb-4">Training Labels</h3>
+    <p class="text-gray-700 text-sm mb-3">
+      Labels are derived from the student's behavioral persona:
+    </p>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-200">
+            <th class="text-left py-2 px-3 font-semibold text-gray-700">Persona</th>
+            <th class="text-center py-2 px-3 font-semibold text-gray-700">Label</th>
+            <th class="text-left py-2 px-3 font-semibold text-gray-700">Rationale</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600">
+          <tr class="border-b border-gray-100">
+            <td class="py-2 px-3">Star Student, Engaged, Moderate</td>
+            <td class="text-center py-2 px-3"><span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">Low Risk</span></td>
+            <td class="py-2 px-3">Sufficient engagement to persist</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3">Inconsistent, Disengaged</td>
+            <td class="text-center py-2 px-3"><span class="px-2 py-0.5 bg-red-100 text-red-800 rounded-full text-xs font-medium">High Risk</span></td>
+            <td class="py-2 px-3">Behavioral pattern correlated with dropout</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-gray-500 text-xs mt-3">
+      5% of labels are randomly flipped during training to introduce noise, preventing the model from overfitting
+      to the deterministic persona-to-label mapping.
+    </p>
+  </div>
+
+</div>

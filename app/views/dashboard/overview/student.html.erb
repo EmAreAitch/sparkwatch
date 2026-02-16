@@ -1,0 +1,110 @@
+<% content_for :page_title, "Student Overview" %>
+<% content_for :page_subtitle, "Monitor individual student performance and engagement" %>
+
+<div class="bg-gray-50 min-h-full" data-controller="student-overview">
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <% [
+      ["Total Students", "totalStudents", "text-gray-900", nil],
+      ["Active This Week", "activeThisWeek", "text-green-600", "Last 7 days"],
+      ["At Risk", "atRisk", "text-red-600", "Last month"],
+      ["High Performers", "highPerformers", "text-indigo-600", "Last week"]
+    ].each do |label, target, color, period| %>
+      <div class="bg-white rounded-lg shadow p-4">
+        <p class="text-gray-500 text-xs font-medium"><%= label %></p>
+        <p class="text-2xl font-bold <%= color %> mt-1" data-student-overview-target="<%= target %>">
+          <span class="inline-block w-16 h-8 bg-gray-200 animate-pulse rounded"></span>
+        </p>
+        <% if period %>
+          <p class="text-xs text-gray-400 mt-1"><%= period %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Engagement Distribution</h3>
+      <p class="text-xs text-gray-500 mb-4">Last week scores</p>
+      <div class="h-[250px] relative">
+        <div data-student-overview-target="chartSkeleton" class="absolute inset-0 flex items-end justify-around gap-2 pb-8">
+          <% [45, 60, 75, 90, 100].each do |h| %>
+            <div class="bg-gray-200 animate-pulse rounded-t w-full" style="height: <%= h %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-student-overview-target="canvas" data-chart-type="bar" data-chart-widget="engagement_distribution" class="hidden"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Students by Cohort</h3>
+      <div class="h-[250px] relative">
+        <div data-student-overview-target="chartSkeleton" class="absolute inset-0 flex items-end justify-around gap-2 pb-8">
+          <% [70, 85, 55, 65, 80].each do |h| %>
+            <div class="bg-gray-200 animate-pulse rounded-t w-full" style="height: <%= h %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-student-overview-target="canvas" data-chart-type="bar" data-chart-widget="cohort_distribution" class="hidden"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Week-over-Week Momentum</h3>
+      <p class="text-xs text-gray-500 mb-3">Students grouped by engagement change from last week</p>
+      <div class="h-[250px] relative">
+        <div data-student-overview-target="chartSkeleton" class="absolute inset-0 flex flex-col justify-around gap-2 pl-8">
+          <% [60, 45, 75, 55, 70].each do |w| %>
+            <div class="bg-gray-200 animate-pulse rounded-r h-full" style="width: <%= w %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-student-overview-target="canvas" data-chart-type="bar" data-chart-orientation="horizontal" data-chart-widget="momentum_distribution" class="hidden"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Risk-Engagement Quadrant</h3>
+      <p class="text-xs text-gray-500 mb-3">Engagement (last week) vs risk (last month) · each dot = one student</p>
+      <div class="h-[250px] relative">
+        <div data-student-overview-target="chartSkeleton" class="absolute inset-0 flex items-center justify-center">
+          <div class="w-full h-full relative p-8">
+            <% [[20,70,3], [35,45,4], [50,30,3], [65,20,5], [75,15,3], [25,60,4], [80,25,3], [45,55,4], [60,40,3], [70,35,5]].each do |l, t, s| %>
+              <div class="absolute w-<%= s %> h-<%= s %> bg-gray-200 animate-pulse rounded-full" style="left: <%= l %>%; top: <%= t %>%"></div>
+            <% end %>
+          </div>
+        </div>
+        <canvas data-student-overview-target="canvas" data-chart-type="scatter" data-chart-widget="risk_engagement_quadrant" class="hidden"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg shadow">
+    <div class="border-b border-gray-200">
+      <nav class="flex -mb-px overflow-x-auto">
+        <% [
+          ["at-risk", "At Risk Students", "atRiskCount"],
+          ["high-performers", "High Performers", "highPerformersCount"],
+          ["inactive", "Inactive", "inactiveCount"]
+        ].each_with_index do |(tab, label, count), i| %>
+          <button class="px-4 sm:px-6 py-3 text-sm font-medium border-b-2 <%= i == 0 ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700' %>"
+                  data-student-overview-target="tabButton"
+                  data-action="click->student-overview#switchTab"
+                  data-tab="<%= tab %>">
+            <%= label %> (<span data-student-overview-target="<%= count %>">0</span>)
+          </button>
+        <% end %>
+      </nav>
+    </div>
+
+    <% [
+      ["at-risk", "Students with risk score ≥ 90% requiring immediate attention"],
+      ["high-performers", "Students with engagement ≥ 85% and low risk scores"],
+      ["inactive", "Students with no activity in the past 7 days"]
+    ].each_with_index do |(tab, desc), i| %>
+      <div data-student-overview-target="tabPanel" data-tab="<%= tab %>" class="<%= 'hidden' unless i == 0 %>">
+        <div class="p-4 sm:p-6">
+          <p class="text-sm text-gray-600 mb-4"><%= desc %></p>
+          <div data-student-overview-target="gridContainer" data-grid-type="<%= tab %>"></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

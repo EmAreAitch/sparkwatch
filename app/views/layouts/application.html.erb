@@ -2,30 +2,168 @@
 <html>
   <head>
     <title><%= content_for(:title) || "Sparkwatch" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Sparkwatch">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" >
   </head>
+  <body
+    class="bg-gray-50"
+    data-controller="sidebar welcome-modal"
+    data-sidebar-open-class="-translate-x-full"
+  >
+    <!-- Mobile Overlay -->
+    <div
+      data-sidebar-target="overlay"
+      class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+    ></div>
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <aside
+        data-sidebar-target="sidebar"
+        class="fixed lg:static inset-y-0 left-0 w-64 bg-indigo-900 text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-50 flex flex-col"
+      >
+        <div class="p-6 flex items-center justify-between">
+          <div>
+            <h1 class="text-2xl font-bold">SparkWatch</h1>
+            <p class="text-indigo-300 text-sm">Analytics Dashboard</p>
+          </div>
+          <button
+            data-action="sidebar#close"
+            class="lg:hidden text-white"
+            type="button"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <nav class="mt-6 flex-1">
+          <%= link_to "Platform Overview", dashboard_overview_platform_path,
+              class: nav_link_class(dashboard_overview_platform_path) %>
+          <%= link_to "Student Overview", dashboard_overview_student_path,
+              class: nav_link_class(dashboard_overview_student_path) %>
+          <%= link_to "Cohort Overview", dashboard_overview_cohort_path,
+              class: nav_link_class(dashboard_overview_cohort_path) %>
+          <%= link_to "Student Search", dashboard_students_path,
+              class: nav_link_class(dashboard_students_path) %>
+          <%= link_to "Active Cohorts", dashboard_cohorts_path,
+              class: nav_link_class(dashboard_cohorts_path) %>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+          <div class="border-t border-indigo-700 my-4 mx-6"></div>
+
+          <%= link_to "How It Works", dashboard_overview_ml_pipeline_path,
+              class: nav_link_class(dashboard_overview_ml_pipeline_path) %>
+        </nav>
+        <div class="p-4 border-t border-indigo-700">
+          <button
+            data-action="welcome-modal#reopen"
+            class="flex items-center gap-2 text-indigo-300 hover:text-white text-xs transition-colors"
+            type="button"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            About this demo
+          </button>
+        </div>
+      </aside>
+      <!-- Main -->
+      <main class="flex-1 overflow-y-auto w-full lg:w-auto">
+        <header class="bg-white shadow-sm">
+          <div class="px-4 sm:px-8 py-4 flex items-center">
+            <button
+              data-action="sidebar#open"
+              class="lg:hidden mr-4 text-gray-600"
+              type="button"
+            >
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <div>
+              <h2 class="text-2xl font-bold text-gray-800">
+                <%= content_for?(:page_title) ? yield(:page_title) : "Dashboard" %>
+              </h2>
+              <p class="text-gray-600">
+                <%= content_for?(:page_subtitle) ? yield(:page_subtitle) : "" %>
+              </p>
+            </div>
+          </div>
+        </header>
+        <div class="p-8">
+          <%= yield %>
+        </div>
+      </main>
+    </div>
+
+    <!-- Welcome Modal -->
+      <div data-welcome-modal-target="modal" class="hidden fixed inset-0 z-[100]">
+        <div data-fade class="fixed inset-0 flex items-center justify-center transition-opacity duration-200 opacity-0">
+          <!-- Backdrop -->
+          <div class="absolute inset-0 bg-black/60"></div>
+          <!-- Modal Card -->
+          <div class="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-8 max-h-[90vh] overflow-y-auto">
+            <!-- Header -->
+            <div class="text-center mb-6">
+              <div class="inline-flex items-center justify-center w-14 h-14 bg-indigo-100 rounded-full mb-4">
+                <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-gray-900">Welcome to SparkWatch</h2>
+              <p class="text-gray-500 mt-1">Student Engagement Analytics</p>
+            </div>
+
+            <!-- Content -->
+            <div class="space-y-4 text-sm text-gray-700">
+              <div class="bg-indigo-50 rounded-lg p-4">
+                <p class="font-semibold text-indigo-900 mb-1">What is this?</p>
+                <p>SparkWatch is a student engagement analytics platform that tracks activity across cohorts and uses an <strong>ML model</strong> to predict which students are at risk of dropping out.</p>
+              </div>
+
+              <div class="bg-amber-50 rounded-lg p-4">
+                <p class="font-semibold text-amber-900 mb-1">About the data</p>
+                <p>This is a demo environment. All student data is <strong>simulated</strong> — 150 students across 6 cohorts, generated by a behavioral simulator with realistic engagement patterns, mid-semester slumps, and burnout curves.</p>
+              </div>
+
+              <div class="bg-green-50 rounded-lg p-4">
+                <p class="font-semibold text-green-900 mb-1">The ML is real</p>
+                <p>Dropout predictions are powered by a <strong>Random Forest classifier</strong> trained on 50,000 synthetic samples. Each prediction includes a per-feature breakdown showing exactly why a student is flagged.</p>
+              </div>
+
+              <div class="bg-gray-50 rounded-lg p-4">
+                <p class="font-semibold text-gray-900 mb-2">How to explore</p>
+                <ul class="space-y-1.5 text-gray-600">
+                  <li>📊 <strong>Platform Overview</strong> — Start here for the big picture across all cohorts</li>
+                  <li>👥 <strong>Cohort Overview</strong> — Compare cohort performance and instructor impact</li>
+                  <li>🎓 <strong>Student Overview</strong> — At-risk students, high performers, momentum</li>
+                  <li>🔍 <strong>Student Detail</strong> — Click any student to see their full profile, predictions, and recommendations</li>
+                </ul>
+              </div>
+
+              <p class="text-center text-gray-500">
+                <a href="<%= dashboard_overview_ml_pipeline_path %>" class="text-indigo-600 hover:text-indigo-800 font-medium">
+                  Learn how the ML pipeline works →
+                </a>
+              </p>
+            </div>
+
+            <!-- Dismiss Button -->
+            <div class="mt-6">
+              <button
+                data-action="welcome-modal#dismiss"
+                class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors"
+              >
+                Got it, let's explore
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
   </body>
 </html>

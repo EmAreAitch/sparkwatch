@@ -1,0 +1,215 @@
+<% content_for :page_title do %>
+  <span id="studentName">
+    <span class="inline-block h-7 w-48 bg-gray-200 animate-pulse rounded"></span>
+  </span>
+<% end %>
+
+<% content_for :page_subtitle do %>
+  <span id="studentEmailSubtitle">
+    <span class="inline-block h-5 w-64 bg-gray-200 animate-pulse rounded"></span>
+  </span>
+<% end %>
+
+<div class="bg-gray-50 min-h-full"
+     data-controller="student-details"
+     data-student-details-student-id-value="<%= params[:id] %>">
+
+  <!-- HERO: Student Info (full width) -->
+  <div class="mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div data-student-details-target="infoSkeleton" class="space-y-3 animate-pulse">
+        <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+        <div class="h-3 bg-gray-200 rounded w-full"></div>
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="h-3 bg-gray-200 rounded"></div>
+          <div class="h-3 bg-gray-200 rounded"></div>
+        </div>
+      </div>
+
+      <div data-student-details-target="info" class="hidden">
+        <div class="grid grid-cols-3 gap-6 items-center">
+          <div>
+            <p class="text-xs text-gray-500">Cohort</p>
+            <p class="text-lg font-bold text-gray-900 mt-1" data-student-details-target="cohort"></p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Instructor</p>
+            <p class="text-lg font-bold text-gray-900 mt-1" data-student-details-target="instructor"></p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-500">Program</p>
+            <p class="text-lg font-bold text-gray-900 mt-1" data-student-details-target="program"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO: KPI cards row -->
+  <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <!-- Risk Card -->
+    <div class="bg-white rounded-lg shadow-md p-4">
+      <p class="text-xs text-gray-500 font-semibold uppercase">Risk</p>
+      <p class="text-xs text-gray-400">Last month</p>
+      <div data-student-details-target="kpiSkeleton" class="mt-3 space-y-1 animate-pulse">
+        <div class="h-6 bg-gray-200 rounded w-1/2"></div>
+      </div>
+      <div data-student-details-target="kpi" class="hidden mt-3">
+        <p class="text-2xl font-bold" data-student-details-target="risk"></p>
+        <p class="text-xs text-gray-500 mt-1" data-student-details-target="riskLevel"></p>
+        <p class="text-xs text-gray-500 mt-1" data-student-details-target="riskTrendLabel"></p>
+      </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="bg-white rounded-lg shadow-md p-4">
+      <p class="text-xs text-gray-500 font-semibold uppercase">Engagement</p>
+      <p class="text-xs text-gray-400">Last week</p>
+      <div data-student-details-target="engagementKpiSkeleton" class="mt-3 space-y-1 animate-pulse">
+        <div class="h-6 bg-gray-200 rounded w-2/3"></div>
+      </div>
+      <div data-student-details-target="engagementKpi" class="hidden mt-3">
+        <p class="text-3xl font-bold" data-student-details-target="engagement"></p>
+        <p class="text-xs text-gray-500 mt-1" data-student-details-target="engagementTrend"></p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-4">
+      <p class="text-xs text-gray-500 font-semibold uppercase">Attendance</p>
+      <div data-student-details-target="attendanceKpiSkeleton" class="mt-3 space-y-1 animate-pulse">
+        <div class="h-6 bg-gray-200 rounded w-2/3"></div>
+      </div>
+      <div data-student-details-target="attendanceKpi" class="hidden mt-3">
+        <p class="text-3xl font-bold" data-student-details-target="attendance"></p>
+        <p class="text-xs text-gray-500 mt-1">Last week</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-4">
+      <p class="text-xs text-gray-500 font-semibold uppercase">Last Active</p>
+      <div data-student-details-target="lastactiveKpiSkeleton" class="mt-3 space-y-1 animate-pulse">
+        <div class="h-6 bg-gray-200 rounded w-2/3"></div>
+      </div>
+      <div data-student-details-target="lastactiveKpi" class="hidden mt-3">
+        <p class="text-2xl font-bold" data-student-details-target="lastActive"></p>
+        <p class="text-xs text-gray-500 mt-1">Days ago</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY: Risk Factors Analysis -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h2 data-student-details-target="riskHeading" class="text-xl font-bold text-gray-900 mb-6">Why this prediction</h2>
+
+    <div data-student-details-target="riskFactorsSkeleton" class="space-y-3 animate-pulse">
+      <% 3.times do %>
+        <div class="border border-gray-200 rounded-lg p-4">
+          <div class="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+          <div class="h-3 bg-gray-200 rounded w-full"></div>
+        </div>
+      <% end %>
+    </div>
+
+    <div data-student-details-target="riskFactors" class="hidden space-y-3"></div>
+  </div>
+
+  <!-- Engagement Breakdown + Analysis -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <!-- Breakdown -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-900 mb-1">Engagement By Component</h3>
+      <p class="text-xs text-gray-500 mb-6">Last week breakdown</p>
+
+      <div data-student-details-target="engagementBreakdownSkeleton" class="space-y-4 animate-pulse">
+        <% 5.times do %>
+          <div>
+            <div class="h-3 bg-gray-200 rounded w-1/4 mb-2"></div>
+            <div class="h-3 bg-gray-200 rounded w-full"></div>
+          </div>
+        <% end %>
+      </div>
+
+      <div data-student-details-target="engagementBreakdown" class="hidden space-y-4"></div>
+    </div>
+
+    <!-- Analysis -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-900 mb-6">Performance Analysis</h3>
+
+      <div data-student-details-target="engagementAnalysisSkeleton" class="space-y-4 animate-pulse">
+        <% 4.times do %>
+          <div class="h-4 bg-gray-200 rounded"></div>
+        <% end %>
+      </div>
+
+      <div data-student-details-target="engagementAnalysis" class="hidden space-y-4 text-sm"></div>
+    </div>
+  </div>
+
+  <!-- Trends -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-900 mb-2">Engagement Trend</h3>
+      <p class="text-sm text-gray-500 mb-4">Last 12 weeks vs cohort average</p>
+      <div style="height: 250px;">
+        <div data-student-details-target="engagementChartSkeleton"
+             class="h-full flex items-end justify-around gap-2 pb-8 animate-pulse">
+          <% 8.times do %>
+            <div class="bg-gray-200 rounded-t w-full" style="height: <%= rand(40..90) %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-student-details-target="engagementChart" class="hidden"></canvas>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h3 class="text-lg font-bold text-gray-900 mb-2">Risk Trend</h3>
+      <p class="text-sm text-gray-500 mb-4">Last 3 months vs cohort average</p>
+      <div style="height: 250px;">
+        <div data-student-details-target="riskChartSkeleton"
+             class="h-full flex items-end justify-around gap-2 pb-8 animate-pulse">
+          <% 6.times do %>
+            <div class="bg-gray-200 rounded-t w-full" style="height: <%= rand(40..90) %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-student-details-target="riskChart" class="hidden"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+    <h3 class="text-lg font-bold text-gray-900 mb-1">Recent Activity</h3>
+    <p class="text-xs text-gray-500 mb-6">Last 7 days</p>
+
+    <div data-student-details-target="activitiesSkeleton" class="space-y-3 animate-pulse">
+      <% 5.times do %>
+        <div class="flex items-start">
+          <div class="rounded-full p-2 mr-4 bg-gray-200 w-10 h-10 flex-shrink-0"></div>
+          <div class="flex-1">
+            <div class="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
+            <div class="h-3 bg-gray-200 rounded w-1/3"></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div data-student-details-target="activities" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+    <p data-student-details-target="activitiesEmpty" class="hidden text-sm text-gray-500 text-center py-8">No recent activity</p>
+  </div>
+
+  <!-- Recommendations -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+    <h3 class="text-lg font-bold text-blue-900 mb-4">Recommended Actions</h3>
+
+    <div data-student-details-target="recommendationsSkeleton" class="space-y-3 animate-pulse">
+      <% 4.times do %>
+        <div class="h-4 bg-blue-200 rounded"></div>
+      <% end %>
+    </div>
+
+    <ul data-student-details-target="recommendations" class="hidden space-y-2"></ul>
+    <p data-student-details-target="recommendationsEmpty" class="hidden text-sm text-blue-600">No immediate actions needed</p>
+  </div>
+</div>

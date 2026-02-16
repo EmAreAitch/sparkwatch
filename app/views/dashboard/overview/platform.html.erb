@@ -1,0 +1,109 @@
+<% content_for :page_title, "Platform Overview" %>
+<% content_for :page_subtitle, "Insights across all cohorts and students" %>
+
+<div class="bg-gray-50 min-h-full" data-controller="platform-overview">
+  <!-- KPI Cards -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <% [
+      ["Total Students", "totalStudents", "text-gray-900", nil],
+      ["Active Cohorts", "activeCohorts", "text-blue-600", nil],
+      ["Avg Engagement", "avgEngagement", "text-green-600", "Last week"],
+      ["At Risk Students", "atRiskStudents", "text-red-600", "Last month"]
+    ].each do |label, target, color, period| %>
+      <div class="bg-white rounded-lg shadow p-4">
+        <p class="text-gray-500 text-xs font-medium"><%= label %></p>
+        <p class="text-2xl font-bold <%= color %> mt-1" data-platform-overview-target="<%= target %>">
+          <span class="inline-block w-16 h-8 bg-gray-200 animate-pulse rounded"></span>
+        </p>
+        <% if period %>
+          <p class="text-xs text-gray-400 mt-1"><%= period %></p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Charts Row 1 -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    
+    <!-- Weekly Engagement Trend -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Weekly Engagement Trend</h3>
+      <p class="text-xs text-gray-500 mb-4">Last 12 weeks</p>
+      <div class="h-[300px] relative">
+        <div data-platform-overview-target="chartSkeleton" class="absolute inset-0 flex items-end justify-around gap-2 pb-8">
+          <% [45, 60, 75, 90, 100, 85, 70].each do |h| %>
+            <div class="bg-gray-200 animate-pulse rounded-t w-full" style="height: <%= h %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-platform-overview-target="canvas" 
+                data-chart-type="line" 
+                data-chart-widget="weekly_engagement_trend" 
+                class="hidden"></canvas>
+      </div>
+    </div>
+
+    <!-- Risk Distribution -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Risk Distribution</h3>
+      <p class="text-xs text-gray-500 mb-4">Previous month predictions</p>
+      <div class="h-[300px] relative">
+        <div data-platform-overview-target="chartSkeleton" class="absolute inset-0 flex items-center justify-center">
+          <div class="w-48 h-48 bg-gray-200 animate-pulse rounded-full"></div>
+        </div>
+        <canvas data-platform-overview-target="canvas" 
+                data-chart-type="doughnut" 
+                data-chart-widget="risk_distribution" 
+                class="hidden"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row 2 -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    
+    <!-- Activity Breakdown -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Activity Breakdown (This Week)</h3>
+      <div class="h-[300px] relative">
+        <div data-platform-overview-target="chartSkeleton" class="absolute inset-0 flex items-end justify-around gap-2 pb-8">
+          <% [60, 75, 85, 90, 70].each do |h| %>
+            <div class="bg-gray-200 animate-pulse rounded-t w-full" style="height: <%= h %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-platform-overview-target="canvas" 
+                data-chart-type="bar" 
+                data-chart-widget="weekly_activity_breakdown" 
+                class="hidden"></canvas>
+      </div>
+    </div>
+
+    <!-- Program Performance -->
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Program Performance</h3>
+      <p class="text-xs text-gray-500 mb-4">Avg engagement last week</p>
+      <div class="h-[300px] relative">
+        <div data-platform-overview-target="chartSkeleton" class="absolute inset-0 flex items-end justify-around gap-2 pb-8">
+          <% [70, 85, 65, 80, 75].each do |h| %>
+            <div class="bg-gray-200 animate-pulse rounded-t w-full" style="height: <%= h %>%"></div>
+          <% end %>
+        </div>
+        <canvas data-platform-overview-target="canvas" 
+                data-chart-type="bar" 
+                data-chart-widget="program_performance" 
+                class="hidden"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- At-Risk Students Table -->
+  <div class="bg-white rounded-lg shadow">
+    <div class="p-6 border-b border-gray-200">
+      <h3 class="text-lg font-semibold text-gray-800">Students Requiring Attention</h3>
+      <p class="text-xs text-gray-500 mt-1">Based on last month's predictions</p>
+    </div>
+    
+    <div class="p-4 sm:p-6">
+      <div data-platform-overview-target="gridContainer"></div>
+    </div>
+  </div>
+</div>
