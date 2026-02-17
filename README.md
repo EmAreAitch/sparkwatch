@@ -35,7 +35,7 @@ StudentSimulator (shared behavioral model)
     ├── db/seeds.rb
     │     └── Generates realistic student activity across 6 cohorts
     │
-    └── lib/ml/train_model.rb
+    └── lib/tasks/ml.rake
           └── Generates 50K labeled training samples
                     ↓
               RandomForest + StandardScaler
@@ -49,7 +49,7 @@ StudentSimulator (shared behavioral model)
 
 The same `StudentSimulator` drives both seeding and training. This guarantees the ML model understands the exact behavioral patterns present in the application data — a common pitfall in demo projects where seed scripts and training scripts drift apart.
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for the full write-up.
+
 
 ---
 
@@ -73,7 +73,7 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the full write-up.
 
 ```bash
 # Clone (Git LFS will pull the model automatically)
-git clone https://github.com/<your-username>/sparkwatch.git
+git clone https://github.com/EmAreAitch/sparkwatch.git
 cd sparkwatch
 
 # Install dependencies
@@ -96,7 +96,7 @@ Visit `http://localhost:3000` to see the Platform Overview dashboard.
 The trained model is included via Git LFS, so retraining is not required. If you want to retrain:
 
 ```bash
-bin/rails runner lib/ml/train_model.rb
+bin/rails ml:train
 ```
 
 This generates 50K synthetic samples using `StudentSimulator`, trains a Random Forest classifier (150 estimators, 80/20 split), and serializes the model to `lib/ml/dropout_model.marshal`.
@@ -120,9 +120,11 @@ app/
 │   └── api/                   # Auto-generated typed API routes
 └── views/dashboard/           # ERB templates with skeleton loading
 
-lib/ml/
-├── train_model.rb             # Training pipeline
-└── dropout_model.marshal      # Serialized model (Git LFS)
+lib/
+├── tasks/
+│   └── ml.rake                # Training pipeline (rake ml:train)
+└── ml/
+    └── dropout_model.marshal  # Serialized model (Git LFS)
 ```
 
 ---
