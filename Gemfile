@@ -70,4 +70,4 @@ end
 
 gem "rumale", "~> 2.0"
 
-gem "pagy", "~> 43.2"
+gem "pagy", "~> 43.3"
