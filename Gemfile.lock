@@ -204,9 +204,9 @@ GEM
       racc (~> 1.4)
     nokogiri (1.19.0-x86_64-linux-musl)
       racc (~> 1.4)
-    numo-narray-alt (0.9.11)
-    numo-optimize (0.2.3)
-      numo-narray-alt (~> 0.9.9)
+    numo-narray-alt (0.10.3)
+    numo-optimize (0.3.0)
+      numo-narray-alt (>= 0.9.9, < 0.11.0)
     ostruct (0.6.3)
     pagy (43.2.9)
       json
@@ -317,91 +317,91 @@ GEM
       ffi (~> 1.12)
       logger
     rubyzip (3.2.2)
-    rumale (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-clustering (~> 2.0.2)
-      rumale-core (~> 2.0.2)
-      rumale-decomposition (~> 2.0.2)
-      rumale-ensemble (~> 2.0.2)
-      rumale-evaluation_measure (~> 2.0.2)
-      rumale-feature_extraction (~> 2.0.2)
-      rumale-kernel_approximation (~> 2.0.2)
-      rumale-kernel_machine (~> 2.0.2)
-      rumale-linear_model (~> 2.0.2)
-      rumale-manifold (~> 2.0.2)
-      rumale-metric_learning (~> 2.0.2)
-      rumale-model_selection (~> 2.0.2)
-      rumale-naive_bayes (~> 2.0.2)
-      rumale-nearest_neighbors (~> 2.0.2)
-      rumale-neural_network (~> 2.0.2)
-      rumale-pipeline (~> 2.0.2)
-      rumale-preprocessing (~> 2.0.2)
-      rumale-tree (~> 2.0.2)
-    rumale-clustering (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-core (2.0.2)
+    rumale (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-clustering (~> 2.1.0)
+      rumale-core (~> 2.1.0)
+      rumale-decomposition (~> 2.1.0)
+      rumale-ensemble (~> 2.1.0)
+      rumale-evaluation_measure (~> 2.1.0)
+      rumale-feature_extraction (~> 2.1.0)
+      rumale-kernel_approximation (~> 2.1.0)
+      rumale-kernel_machine (~> 2.1.0)
+      rumale-linear_model (~> 2.1.0)
+      rumale-manifold (~> 2.1.0)
+      rumale-metric_learning (~> 2.1.0)
+      rumale-model_selection (~> 2.1.0)
+      rumale-naive_bayes (~> 2.1.0)
+      rumale-nearest_neighbors (~> 2.1.0)
+      rumale-neural_network (~> 2.1.0)
+      rumale-pipeline (~> 2.1.0)
+      rumale-preprocessing (~> 2.1.0)
+      rumale-tree (~> 2.1.0)
+    rumale-clustering (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-core (2.1.0)
       csv (>= 3.1.9)
-      numo-narray-alt (~> 0.9.10)
-    rumale-decomposition (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-ensemble (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-      rumale-linear_model (~> 2.0.2)
-      rumale-model_selection (~> 2.0.2)
-      rumale-preprocessing (~> 2.0.2)
-      rumale-tree (~> 2.0.2)
-    rumale-evaluation_measure (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-feature_extraction (2.0.2)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+    rumale-decomposition (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-ensemble (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+      rumale-linear_model (~> 2.1.0)
+      rumale-model_selection (~> 2.1.0)
+      rumale-preprocessing (~> 2.1.0)
+      rumale-tree (~> 2.1.0)
+    rumale-evaluation_measure (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-feature_extraction (2.1.0)
       mmh3 (~> 1.0)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-kernel_approximation (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-kernel_machine (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-linear_model (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      numo-optimize (~> 0.2.2)
-      rumale-core (~> 2.0.2)
-    rumale-manifold (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-      rumale-decomposition (~> 2.0.2)
-    rumale-metric_learning (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      numo-optimize (~> 0.2.2)
-      rumale-core (~> 2.0.2)
-      rumale-decomposition (~> 2.0.2)
-    rumale-model_selection (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-      rumale-evaluation_measure (~> 2.0.2)
-      rumale-preprocessing (~> 2.0.2)
-    rumale-naive_bayes (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-nearest_neighbors (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-neural_network (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-pipeline (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-preprocessing (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
-    rumale-tree (2.0.2)
-      numo-narray-alt (~> 0.9.10)
-      rumale-core (~> 2.0.2)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-kernel_approximation (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-kernel_machine (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-linear_model (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      numo-optimize (>= 0.2.2, < 1.0.0)
+      rumale-core (~> 2.1.0)
+    rumale-manifold (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+      rumale-decomposition (~> 2.1.0)
+    rumale-metric_learning (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      numo-optimize (>= 0.2.2, < 1.0.0)
+      rumale-core (~> 2.1.0)
+      rumale-decomposition (~> 2.1.0)
+    rumale-model_selection (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+      rumale-evaluation_measure (~> 2.1.0)
+      rumale-preprocessing (~> 2.1.0)
+    rumale-naive_bayes (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-nearest_neighbors (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-neural_network (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-pipeline (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-preprocessing (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
+    rumale-tree (2.1.0)
+      numo-narray-alt (>= 0.9.10, < 0.11.0)
+      rumale-core (~> 2.1.0)
     securerandom (0.4.1)
     selenium-webdriver (4.39.0)
       base64 (~> 0.2)
@@ -501,7 +501,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 8.1.2)
   rubocop-rails-omakase
-  rumale (~> 2.0)
+  rumale (~> 2.1)
   selenium-webdriver
   solid_cable
   solid_cache
@@ -592,8 +592,8 @@ CHECKSUMS
   nokogiri (1.19.0-arm-linux-musl) sha256=23ed90922f1a38aed555d3de4d058e90850c731c5b756d191b3dc8055948e73c
   nokogiri (1.19.0-x86_64-linux-gnu) sha256=f482b95c713d60031d48c44ce14562f8d2ce31e3a9e8dd0ccb131e9e5a68b58c
   nokogiri (1.19.0-x86_64-linux-musl) sha256=1c4ca6b381622420073ce6043443af1d321e8ed93cc18b08e2666e5bd02ffae4
-  numo-narray-alt (0.9.11) sha256=2dc7a949bc565d8dd9810d368065253f9289e4896bac57826c95f9daf26027a0
-  numo-optimize (0.2.3) sha256=f1b1db09346418e86b9648f00e24e1daed0872296ecf93721c0e2ca8ce3dfa7e
+  numo-narray-alt (0.10.3) sha256=07b01a8663f00d5b027fc3645ae172abb40049039aa46415c94dbfe23b0502ee
+  numo-optimize (0.3.0) sha256=9b42e388b93dfbc6909a221df2c66013f7370b148bbc0c2cce67ad53c312873c
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   pagy (43.2.9) sha256=6a167c8da72388883e8f4c8e29dc8f5577f9f934d8d0b704cb2f39d2cebd276e
   parallel (1.27.0) sha256=4ac151e1806b755fb4e2dc2332cbf0e54f2e24ba821ff2d3dcf86bf6dc4ae130
@@ -634,25 +634,25 @@ CHECKSUMS
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
   rubyzip (3.2.2) sha256=c0ed99385f0625415c8f05bcae33fe649ed2952894a95ff8b08f26ca57ea5b3c
-  rumale (2.0.2) sha256=8e990c1c2ed138488265a24feff77ca2698a12c064a65aa7c1346c7f617713dd
-  rumale-clustering (2.0.2) sha256=bf8498c2ad6a9b46bf1c1398b3f62f7f3764565a8062210bf44dfbcc352d900d
-  rumale-core (2.0.2) sha256=47f1743f5974aa645032c6c44ebcb76560349146f84607ffa4d6205619ad6514
-  rumale-decomposition (2.0.2) sha256=e76c5cca427e341b1d25f3d02ce7dc1fe1c2c3230f93ddbea93f3ce361e56bcc
-  rumale-ensemble (2.0.2) sha256=cc5db9a2ca7bf11c333636302ad52a3a4216e5ca041e28a42f91969f7511229b
-  rumale-evaluation_measure (2.0.2) sha256=218031bc458b087f2a7ee433cb28cf91852fe282c662b008bb29282817642ff1
-  rumale-feature_extraction (2.0.2) sha256=cb2e5f0db5f41a5c9c81612093d19b68a6ca01943b5fa7a84fb2e36bab99bf27
-  rumale-kernel_approximation (2.0.2) sha256=aee2a5af2bcbacd98ea2de176d38391761b3da44565f5d6f7f2efb5127222d43
-  rumale-kernel_machine (2.0.2) sha256=1456c87275f2986bc66b115e601eba8bc90e7d7c6a37c7e73949fa56b868ae8f
-  rumale-linear_model (2.0.2) sha256=afdc00ce026456f32391afa6cf89ccd6b52b29aa3ab86da22776e1796aa39d9c
-  rumale-manifold (2.0.2) sha256=04646c112bee794b1233dec5aaad80717ac39e252a589460bcbe2df4a835d5e9
-  rumale-metric_learning (2.0.2) sha256=93737209c9a83b0913e22fb908a9614acd146a7648df203ab3fd14e9072b780c
-  rumale-model_selection (2.0.2) sha256=84b81270e170ab8e4a9925c5fb4ae936782b8f02a38f2f7187cd40a9b320e7ce
-  rumale-naive_bayes (2.0.2) sha256=29094d38216ef43e05a7f6ceea6e7f9915bb13113aa209fcf02081e2f7a73ae0
-  rumale-nearest_neighbors (2.0.2) sha256=704fabc8dddced07ba3a2081a9c490e95035448b54fbda55417ff99a457062bd
-  rumale-neural_network (2.0.2) sha256=116435a77a25997af67e81aad485bf11a4f6477f4851d21936e17852e01c3c80
-  rumale-pipeline (2.0.2) sha256=7d77a3a9a0c70173ad8e7a3ef01b42eb1eb28056c644198452cde8bf92c691a0
-  rumale-preprocessing (2.0.2) sha256=6f6e8d4f9fb3e20a5b86bf3946862a3a7b3e51e18842f2cd97d8f50b2140c614
-  rumale-tree (2.0.2) sha256=9fa27c31dfb547abf5520b6549f67a4068bb7b0a35e6e7473c9c142dcd037e9b
+  rumale (2.1.0) sha256=4c65ed5fc243924f2696e45ae8d89a52fff6f13f3ceb1f1bd205c07644ef2fbc
+  rumale-clustering (2.1.0) sha256=0222eda86debd636944167ae47959ff9fb2519211460f5577dd4e0e803ecebed
+  rumale-core (2.1.0) sha256=3bf19a09f1287319b43ff45449e0a1d4a1dde42603526ec0f38de2d8a9715e12
+  rumale-decomposition (2.1.0) sha256=f4824577ee1150947a7a0b24fafd08253e4ee2cc7d16d6de2c518bd478dfb89b
+  rumale-ensemble (2.1.0) sha256=dfd0711763df4956240f875025ee06d0dcb58833f7abb458fa174746807622e8
+  rumale-evaluation_measure (2.1.0) sha256=1aa327c378dda837203d25b78ae8d3f1c35de78622bd3902aad8de15c691d0b7
+  rumale-feature_extraction (2.1.0) sha256=20c35892ee8703c17b773df5a72590d5cf53eb109dd6d7030539a8a19d9d5f42
+  rumale-kernel_approximation (2.1.0) sha256=6055f905f1bfa7340c41ca86233b9e6993972d2632b110f88031ce03eb036889
+  rumale-kernel_machine (2.1.0) sha256=d63c289ba8b88fbd083c339597043b89416aaa2a74f854a564327c2e3e647273
+  rumale-linear_model (2.1.0) sha256=d56e14f348e7deb7cb7432cb9954c0b5e9f21bbb204ae2dee734f34444dc4d6b
+  rumale-manifold (2.1.0) sha256=66109660eb7437545158f16433f96ee82cfc05c03cff9f4270b90b45522a2346
+  rumale-metric_learning (2.1.0) sha256=bfceb9425c6685a3dff049cae0e68015f64ff4c7f630b80ec7f527887078b13d
+  rumale-model_selection (2.1.0) sha256=ea1f13ce77770bd6b3aff91296d85eee552cbb8206d81e868859df14c1e13048
+  rumale-naive_bayes (2.1.0) sha256=ddc8557e2550567c32dac6dfb744b2e4bb728ef4c5f58a8df93f9f7f2dfba482
+  rumale-nearest_neighbors (2.1.0) sha256=bef2987723984296b994ab8cc51d3f2e804068d05a6eb65fdeb4d7bfdfc08f74
+  rumale-neural_network (2.1.0) sha256=0963eb9e4263e50be898539cfe06a100524fb64a31af11cea8915d0e2a50bff4
+  rumale-pipeline (2.1.0) sha256=a2cf97282a1c118e94858d871efaf8d4b5181411589fd18a50b76ff48c498fef
+  rumale-preprocessing (2.1.0) sha256=7f240c5f603b12f448b4e22b0fcf3b66a88d385be99c9aa9443368d973adc1f7
+  rumale-tree (2.1.0) sha256=2b395cfdac51c39656f6fe484673b85ffcb220fef48f82953ba0eb2a16cd0207
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.39.0) sha256=984a1e63d39472eaf286bac3c6f1822fa7eea6eed9c07a66ce7b3bc5417ba826
   solid_cable (3.0.12) sha256=a168a54731a455d5627af48d8441ea3b554b8c1f6e6cd6074109de493e6b0460
