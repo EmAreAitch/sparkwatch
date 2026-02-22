@@ -68,6 +68,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "rumale", "~> 2.0"
+gem "rumale", "~> 2.1"
 
 gem "pagy", "~> 43.2"
